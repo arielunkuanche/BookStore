@@ -18,12 +18,21 @@ public class Book {
     public Book(){};
 
     public Book(String title, String author, String isbn, int publishYear, double price){
+        super();
         this.title = title;
         this.author = author;
         this.isbn = isbn;
         this.publishYear = publishYear;
         this.price = price;
 
+    }
+
+    public Long getId(){
+        return id;
+    }
+
+    public void setId(Long id){
+        this.id = id;
     }
 
     public String getTitle() {
