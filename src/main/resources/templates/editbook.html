@@ -5,9 +5,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<h1>Add book</h1>
+	<h1>Eidt book</h1>
     <div>
-        <form th:object="${book}" th:action="@{save}" action="#" method="POST">
+        <form th:object="${book}" th:action="@{../save}" action="#" method="POST">
+            <input type="hidden" id="id" th:field="*{id}">
             <label for="bauthor">Author</label>
             <input type="text" id="bauthor" th:field="*{author}">
             <div style="clear: both; display: block; height: 10px;"></div>
