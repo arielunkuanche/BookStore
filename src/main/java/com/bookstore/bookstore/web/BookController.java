@@ -40,10 +40,15 @@ public class BookController {
     }
 
     // restful service to get book by id
-    
     @RequestMapping(value="/book/{id}", method=RequestMethod.GET)
     public @ResponseBody Optional<Book> findStudentByIdRest(@PathVariable("id") Long bookId){
         return brepository.findById(bookId);
+    }
+
+    // restful service to adding new book
+    @RequestMapping(value="/addbook", method=RequestMethod.POST)
+    public @ResponseBody Book addNewBookwithRest(Book book){
+        return brepository.save(book);
     }
 
     @RequestMapping(value="/add", method=RequestMethod.GET)
