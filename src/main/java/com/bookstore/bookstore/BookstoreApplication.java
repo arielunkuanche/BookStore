@@ -6,10 +6,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.bookstore.bookstore.domain.BookRepository;
 import com.bookstore.bookstore.domain.Category;
 import com.bookstore.bookstore.domain.CategoryRepository;
+import com.bookstore.bookstore.domain.AppUser;
+import com.bookstore.bookstore.domain.AppUserRepository;
 import com.bookstore.bookstore.domain.Book;
 
 @SpringBootApplication
@@ -22,14 +26,13 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner booksDemo(BookRepository brepository, CategoryRepository crepository){
+	public CommandLineRunner booksDemo(BookRepository brepository, CategoryRepository crepository, AppUserRepository urepository){
 		return (args) -> {
 			log.info("save categories");
 			Category cat1 = new Category("Allegory");
 			Category cat2 = new Category("Realism");
 			Category cat3 = new Category("Southern Gothic Bildungsroman");
 			Category cat4 = new Category("Tragedy");
-
 			crepository.save(cat1);
 			crepository.save(cat2);
 			crepository.save(cat3);
@@ -41,6 +44,14 @@ public class BookstoreApplication {
 			brepository.save(new Book("To Kill a Mockingbird", "Harper Lee", "978-0061120084", 1960, 10.99, cat3));
 			brepository.save(new Book("The Great Gatsby", "F. Scott Fitzgerald", "978-0743273565", 1925, 12.50,cat4));
 		
+			// create app users: admin, user
+			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			AppUser user1 = new AppUser("user", passwordEncoder.encode("user"), "userrole@email.com", "USER");
+			AppUser user2 = new AppUser("admin",passwordEncoder.encode("admin") , "adminrole@email.com", "ADMIN");
+
+			urepository.save(user1);
+			urepository.save(user2);
+
 			log.info("fetch all books");
 			for(Book book : brepository.findAll()){
 				log.info(book.toString());
