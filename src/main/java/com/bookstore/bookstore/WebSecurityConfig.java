@@ -27,7 +27,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception{
 
         http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers(antMatcher("/css/**")).permitAll()
-                .requestMatchers(antMatcher("/delete/**")).hasAuthority("ADMIN")
+                .requestMatchers(antMatcher("/delete/**")).hasRole("ADMIN")
                 .anyRequest().authenticated())
             .formLogin(
                 formlogin -> formlogin.loginPage("/login").defaultSuccessUrl("/index", true).permitAll())
